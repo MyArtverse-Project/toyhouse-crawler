@@ -13,7 +13,7 @@ def get_character_data(url):
 def main():
   
   victim= "reshireve"
-  base_url = "https://toyhou.se/"
+  base_url = "https://toyhou.se"
   req = requests.get(f"{base_url}{victim}/characters")
   soup = bs4.BeautifulSoup(req.text, "html.parser")
   characters = []
@@ -26,11 +26,10 @@ def main():
     link = data['href']
     folder_req = requests.get(link)
     folder_soup = bs4.BeautifulSoup(folder_req.text, "html.parser")
-    folder_character_links = folder_soup.findAll("a", class_="character-thumb")
-    folder_characters = [{ "href": characters.get("href"), "folder": folders["name"] } for characters in folder_character_links]
-
+    folder_character_links = folder_soup.findAll("div", class_="character-thumb")
+    folder_characters = [{ "href": f'{base_url}{characters.find("a").get("href")}', "folder": data['name']} for characters in folder_character_links]
     characters.extend(folder_characters)
-  print(len(characters))
+  print(characters)
   # TODO 2: Go through each character and get the character's info
   print(len(character_links))
   
