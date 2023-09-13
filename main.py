@@ -1,11 +1,16 @@
 import asyncio
-import requests
-import bs4
+from requests import Session
+from bs4 import BeautifulSoup
 
 
-def get_character_data(url):
-    req = requests.get(url)
-    soup = bs4.BeautifulSoup(req.text, "html.parser")
+def get_requests(url: str) -> BeautifulSoup:
+    _req = Session().get(url)
+
+    return BeautifulSoup(_req.text, "html.parser")
+
+
+def get_character_data(url: str):
+    soup = get_requests(url)
     name = soup.find("h1", class_="display-4").get_text()
     try:
         description = soup.find(
@@ -13,9 +18,8 @@ def get_character_data(url):
     except:
         description = "Description not provided"
 
-    gallery_req = requests.get(f"{url}/gallery")
-    gallery_soup = bs4.BeautifulSoup(gallery_req.text, "html.parser")
-    artworks = gallery_soup.findAll("div", class_="gallery-thumb")
+    gallery_soup = get_requests(f"{url}/gallery")
+    artworks = gallery_soup.find_all("div", class_="gallery-thumb")
     artworks = [{"href": f'{artwork.find("img").get("src")}'}
                 for artwork in artworks]
     print(artworks)
@@ -37,10 +41,9 @@ def get_toyhouse_data(username):
 
     characters = []
 
-    req = requests.get(f"{base_url}/{username}/characters")
-    soup = bs4.BeautifulSoup(req.text, "html.parser")
-    folder_links = soup.findAll("a", class_="characters-folder")
-    character_links = soup.findAll("a", class_="character-thumb")
+    soup = get_requests(f"{base_url}/{username}/characters")
+    folder_links = soup.find_all("a", class_="characters-folder")
+    character_links = soup.find_all("a", class_="character-thumb")
 
     folders = [{"href": folder.get("href"), "name": folder.find(
         "div", class_="characters-folder-name").get_text()} for folder in folder_links]
@@ -52,9 +55,8 @@ def get_toyhouse_data(username):
 
     for data in folders:
         link = data['href']
-        folder_req = requests.get(link)
-        folder_soup = bs4.BeautifulSoup(folder_req.text, "html.parser")
-        folder_character_links = folder_soup.findAll(
+        folder_soup = get_requests(link)
+        folder_character_links = folder_soup.find_all(
             "div", class_="character-thumb")
         folder_characters = [
             {"href": f'{base_url}{characters.find("a").get("href")}', "folder": data['name']} for characters in folder_character_links]
