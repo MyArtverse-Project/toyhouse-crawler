@@ -1,2 +1,3 @@
 # TODO
 - [ ] API
+- [ ] GraphQL extension
