@@ -20,3 +20,5 @@ python main.py
 ```
 
 ## License
+
+GPL-3.0 © Fusky Labs Software
