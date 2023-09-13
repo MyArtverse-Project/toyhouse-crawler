@@ -24,13 +24,12 @@ def get_character_data(url):
   return results
 
 
-def main():
-  victim= "reshireve"
+def get_toyhouse_data(username):
   base_url = "https://toyhou.se"
-  print(f"Username: {victim}")
+  print(f"Username: {username}")
   print(f"Host: {base_url}")
   print("Getting folders...")
-  req = requests.get(f"{base_url}/{victim}/characters")
+  req = requests.get(f"{base_url}/{username}/characters")
   soup = bs4.BeautifulSoup(req.text, "html.parser")
   characters = []
   folder_links = soup.findAll("a", class_="characters-folder")
@@ -54,7 +53,7 @@ def main():
   for character in characters:
     print(character)
     final_characters.append(get_character_data(character['href']))
-  print(final_characters)
+  return final_characters
   
   
 
