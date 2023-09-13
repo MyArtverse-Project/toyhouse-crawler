@@ -1,12 +1,12 @@
-## ToyHouse Crawler
+# ToyHouse Crawler
 
-### Requirements
+## Contributing
+
+## Requirements
 
 - Python 3.11 or Later
 
-
-### Getting Started
-
+## Installation
 
 ```
 # Create virutal enviroment
@@ -15,8 +15,8 @@ python -m venv venv
 # Install Requirements
 pip install -r requirements.txt
 
-# Run the program 
+# Run the program
 python main.py
 ```
 
-###
+## License
