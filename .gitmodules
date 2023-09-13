@@ -1,0 +1,3 @@
+[submodule "kutils"]
+	path = kutils
+	url = https://github.com/kuroji-fusky/kuro-utils.git
