@@ -19,15 +19,18 @@ A [toyhou.se](https://toyhou.se/) scraper written in Python and FastAPI.
 
 ### Installation
 
-```
+```sh
 # Create a virtual environment
 python -m venv venv
 
 # Install Requirements
 pip install -r requirements.txt
 
-# Run the program
+# Run the web server
 python main.py
+
+# Alternatively, run the scraper with the `username` argument
+python scraper.py --username "OzzyTheDev"
 ```
 
 ## License
